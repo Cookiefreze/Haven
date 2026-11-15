@@ -21,5 +21,6 @@ public class groundscript : MonoBehaviour
         {
             playerscript.touchGrass();
         }
+
     }
 }

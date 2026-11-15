@@ -8,13 +8,16 @@ public class camerascript : MonoBehaviour
 
     public Transform playerTransform;
     public Vector3 offset = new Vector3(0f, 0f, -10f);
+    public Vector3 higt;
+
 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       
+       higt = new Vector3(0f, maxHeight-1, -10f);
+
     }
     void LateUpdate()
     {
@@ -27,7 +30,7 @@ public class camerascript : MonoBehaviour
             }
         else if(position.y >= maxHeight)
             {
-                                transform.position = position;
+                                transform.position = higt;
 
             }  
         else{
