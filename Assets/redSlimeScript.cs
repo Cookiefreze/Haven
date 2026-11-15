@@ -13,7 +13,6 @@ public class redSlimeScript : MonoBehaviour
     public float speed = 3;
     public Rigidbody2D playerRb;
     public float redHealth =2;
-    public ScoreScript scoreScript;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -66,16 +65,6 @@ public class redSlimeScript : MonoBehaviour
         redHealth -= 1;
         if (redHealth <= 0)
         {
-            if (scoreScript == null)
-            {
-                scoreScript = FindFirstObjectByType<ScoreScript>();
-            }
-
-            if (scoreScript != null)
-            {
-                scoreScript.AddScore(1);
-            }
-
             Destroy(gameObject);
         }
     }
