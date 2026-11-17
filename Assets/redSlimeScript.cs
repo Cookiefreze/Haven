@@ -1,5 +1,4 @@
 using System.Security.Cryptography;
-using Unity.InferenceEngine;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Timeline;
@@ -19,6 +18,7 @@ public class redSlimeScript : MonoBehaviour
     public bool IsTouchingRedSlime = false;
     public groundscript groundscript;
     public redSlimeScript redSlimeScripts;
+    public float knockBackRange = 0.5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,37 +39,38 @@ public class redSlimeScript : MonoBehaviour
 
                 if(redSlimeCollider.IsTouching(playerCollider))
             {
-                 groundscript.IsPlayerOnGround(true);
+                //  groundscript.IsPlayerOnGround(true);
+                slimeScript.touchGrass();
 
                                     
 
             
         
         slimeScript.health -= 9;
-        playerRb.linearVelocity += new Vector2(-5, playerPosition.position.y - transform.position.y);
-            }
-        else
-        {
-            int i =0;
-        
-                foreach(GameObject _gameObject in GameObject.FindGameObjectsWithTag("RedSlime")){
-        redSlimeScripts = _gameObject.GetComponent<redSlimeScript>();
-        i += 1;
-        
-
-            if (redSlimeScripts.check())
-            {
-                groundscript.IsPlayerOnGround(true);
 
             }
-                else
-                {
-                    if(i==GameObject.FindGameObjectsWithTag("RedSlime").Length){
-                        groundscript.IsPlayerOnGround(true);
-                    }
-                }
-            }
-        }
+        // else
+        // {
+        //     int i =0;
+        
+        //         foreach(GameObject _gameObject in GameObject.FindGameObjectsWithTag("RedSlime")){
+        // redSlimeScripts = _gameObject.GetComponent<redSlimeScript>();
+        // i += 1;
+        
+
+        //     if (redSlimeScripts.check())
+        //     {
+        //         groundscript.IsPlayerOnGround(true);
+
+        //     }
+        //         else
+        //         {
+        //             if(i==GameObject.FindGameObjectsWithTag("RedSlime").Length){
+        //                 groundscript.IsPlayerOnGround(true);
+        //             }
+        //         }
+        //     }
+        // }
         
     }
     void FixedUpdate()
@@ -101,12 +102,36 @@ public class redSlimeScript : MonoBehaviour
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider == playerCollider)
-        {
+        // if (collision.collider == playerCollider)
+        // {
+        //             if (playerPosition.position.y > transform.position.y)
+        //     {
+        //         Debug.Log(playerRb.linearVelocity);
+        //         playerPosition.position = new Vector3(playerPosition.position.x-knockBackRange,playerPosition.position.y+knockBackRange);
 
-        }
+        // playerRb.linearVelocity = new Vector2(-50,0);
+        // slimeScript.knockSet(-1);
+
+
+
+        //     }
+        //     else
+        //     {
+        //                         playerPosition.position = new Vector3(playerPosition.position.x+knockBackRange,playerPosition.position.y+knockBackRange);
+
+        // playerRb.linearVelocity = new Vector2(50,0);
+
+
+
+ 
+        //     }
+        //     slimeScript.knockSet(1);
+
+        // }
 
     }
+
+
     public void damage()
     {
         redHealth -= 1;

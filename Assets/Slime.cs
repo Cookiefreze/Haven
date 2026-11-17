@@ -1,6 +1,4 @@
 using System;
-using Unity.AppUI.UI;
-using Unity.InferenceEngine.Tokenization;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
@@ -21,6 +19,10 @@ public class Slime : MonoBehaviour
     public float jumpPower = 10f;
     public float health = 100;
     public eatScript eatScript;
+    public Rigidbody2D rigidbody2D;
+    public bool knock = false;
+    public float _dir;
+
 
     public int jumpT =  1;
     void Start()
@@ -32,6 +34,7 @@ public class Slime : MonoBehaviour
     void Update()
     
     {
+
         animator.SetFloat("VelocityY", rb.linearVelocityY);
 
         if (eat.action.WasPressedThisFrame())
@@ -54,15 +57,24 @@ public class Slime : MonoBehaviour
     private void FixedUpdate()
 
     {
-               rb.MoveRotation(Mathf.MoveTowardsAngle(
-            rb.rotation,
-            0f,
-            rotationSpeed * Time.fixedDeltaTime));
+            //    rb.MoveRotation(Mathf.MoveTowardsAngle(
+            // rb.rotation,
+            // 0f,
+            // rotationSpeed * Time.fixedDeltaTime));
 
 
         
+        if (knock == true)
+        {
+            rb.linearVelocityX += _moveDirection * moveSpeed/5*Time.deltaTime;
+            _knock(_dir);
 
-        rb.linearVelocityX = _moveDirection * moveSpeed;
+        }
+        else
+        {
+            rb.linearVelocityX = _moveDirection * moveSpeed;
+
+        }
         if(rb.linearVelocityX < 0)
         {
             transform.rotation = Quaternion.Euler(transform.rotation.x,-180,transform.rotation.z);
@@ -101,11 +113,11 @@ public class Slime : MonoBehaviour
     public void touchGrass()
     {
         jumpT = 1;
-        animator.SetBool("IsTouchGround", true);
+        animator.SetTrigger("IsTouchGround");
     }
     public void notTouchingGrass()
     {
-        animator.SetBool("IsTouchGround",false);
+        // animator.SetBool("IsTouchGround",false);
             //         float Direction = move.action.ReadValue<Vector2>().x;
             // Debug.Log(Direction);
             // if(Direction >= 0)
@@ -121,6 +133,35 @@ public class Slime : MonoBehaviour
  
             
         
+    }
+    void LateUpdate()
+    {
+                animator.SetBool("IsTouchGround",false);
+
+    }
+    public void knockSet(float dir)
+    {
+        knock = true;
+        _dir = dir;
+        
+
+    }
+    public void _knock(float dir)
+    {
+        if (dir == -1)
+        {
+        if (rigidbody2D.linearVelocityX > -20)
+        {
+            knock = false;
+        }
+        }
+        else if (dir == 1)
+        {
+        if (rigidbody2D.linearVelocityX < 20)
+        {
+            knock = false;
+        }
+        }
     }
 
 
