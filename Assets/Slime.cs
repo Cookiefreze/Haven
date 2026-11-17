@@ -1,4 +1,6 @@
 using System;
+using Unity.AppUI.UI;
+using Unity.InferenceEngine.Tokenization;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime;
@@ -30,6 +32,8 @@ public class Slime : MonoBehaviour
     void Update()
     
     {
+        animator.SetFloat("VelocityY", rb.linearVelocityY);
+
         if (eat.action.WasPressedThisFrame())
         {
             animator.SetTrigger("eat");
@@ -43,30 +47,33 @@ public class Slime : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpPower);
             jumpT -= 1;
              setJumpState();
-
+ 
         }   
          }
 
     private void FixedUpdate()
+
     {
-        animator.SetBool("IsTouchGround", false);
+               rb.MoveRotation(Mathf.MoveTowardsAngle(
+            rb.rotation,
+            0f,
+            rotationSpeed * Time.fixedDeltaTime));
+
+
+        
 
         rb.linearVelocityX = _moveDirection * moveSpeed;
         if(rb.linearVelocityX < 0)
         {
-            transform.rotation = Quaternion.Euler(0,-180,0);
+            transform.rotation = Quaternion.Euler(transform.rotation.x,-180,transform.rotation.z);
         }
         else if(rb.linearVelocityX > 0)
         {
-            transform.rotation = Quaternion.Euler(0,0,0);
+            transform.rotation = Quaternion.Euler(transform.rotation.x,0,transform.rotation.z);
 
         }
-        rb.MoveRotation(Mathf.MoveTowardsAngle(
-            rb.rotation,
-            0f,
-            rotationSpeed * Time.fixedDeltaTime));
+  
         
-            animator.SetFloat("VelocityY", rb.linearVelocityY);
 
         if(health == 0)
             {
@@ -75,6 +82,7 @@ public class Slime : MonoBehaviour
 
 
             }
+        
 
         
 
@@ -95,5 +103,25 @@ public class Slime : MonoBehaviour
         jumpT = 1;
         animator.SetBool("IsTouchGround", true);
     }
+    public void notTouchingGrass()
+    {
+        animator.SetBool("IsTouchGround",false);
+            //         float Direction = move.action.ReadValue<Vector2>().x;
+            // Debug.Log(Direction);
+            // if(Direction >= 0)
+            // {
+            //     transform.rotation = Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z+Direction*Time.deltaTime*10);
+            // }
+            // else
+            // {
+            // transform.rotation = Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z-Direction*Time.deltaTime*10);
+
+            // }
+
+ 
+            
+        
+    }
+
 
 }

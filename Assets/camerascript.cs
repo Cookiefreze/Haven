@@ -23,19 +23,10 @@ public class camerascript : MonoBehaviour
     {
         if (playerTransform != null)
         {
-                Vector3 position = transform.position;
-        if(position.y <= minimumHeight)
-            {
-                transform.position = position;
-            }
-        else if(position.y >= maxHeight)
-            {
-                                transform.position = higt;
-
-            }  
-        else{
+        
+        
             transform.position = playerTransform.position + offset;
-        }
+        
     }
     }
 

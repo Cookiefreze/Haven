@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8755928511634265505}
   m_Layer: 0
   m_Name: Red slime
-  m_TagString: Untagged
+  m_TagString: RedSlime
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -201,6 +201,7 @@ MonoBehaviour:
   slimeScript: {fileID: 0}
   speed: 3
   playerRb: {fileID: 0}
+  redSlimeCollider: {fileID: 0}
   redHealth: 2
 --- !u!1 &3378940508030471965
 GameObject:
